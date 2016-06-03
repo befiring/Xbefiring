@@ -34,7 +34,6 @@ public class MainActivity extends AppCompatActivity {
         actionBar.setHomeAsUpIndicator(R.drawable.ic_menu);
         actionBar.setDisplayHomeAsUpEnabled(true);
 
-        System.out.println("测试git");
 
         MyPagerAdapter adapter=new MyPagerAdapter(getSupportFragmentManager());
         ViewPager viewPager=(ViewPager)findViewById(R.id.viewpager);
