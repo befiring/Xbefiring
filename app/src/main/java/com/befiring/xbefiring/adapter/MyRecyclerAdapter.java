@@ -47,8 +47,8 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
                 Bundle args=new Bundle();
                 User user=new User();
                 user.setName("befiring");
-                user.setAge(2);
-                user.setSex(1);
+                user.setPassword("123");
+
                 args.putParcelable("user",user);
                 Intent intent=new Intent(context,LoginActivity.class);
                 intent.putExtras(args);

@@ -18,19 +18,17 @@ import java.net.URLEncoder;
  */
 public class HttpUtil {
 
-    static String strUrl="http://192.168.1.102:8080/Xbefiring/servlet/UserServlet";
+    static String registerUrl="http://192.168.1.102:8080/Xbefiring/servlet/UserServlet";
+    static String loginUrl="http://192.168.1.102:8080/Xbefiring/servlet/LoginServlet";
     static URL url=null;
 
-    public static void upLoad(){
+    public static String upLoad(User user){
 
-        User user=new User();
-        user.setName("befiring1");
-        user.setAge(23);
-        user.setSex(1);
+        String result="";
         Gson gson=new Gson();
         String jsonStr=gson.toJson(user);
         try{
-            url=new URL(strUrl);
+            url=new URL(registerUrl);
             HttpURLConnection conn=(HttpURLConnection)url.openConnection();
             conn.setDoInput(true);
             conn.setDoOutput(true);
@@ -47,7 +45,6 @@ public class HttpUtil {
             dop.close();
 
             BufferedReader reader=new BufferedReader(new InputStreamReader(conn.getInputStream()));
-            String result="";
             String readLine=null;
             while((readLine=reader.readLine())!=null){
                 result+=readLine;
@@ -59,6 +56,43 @@ public class HttpUtil {
         }catch(Exception e){
            Log.d("wm","error occured");
         }
+        return result;
+    }
+
+    public static boolean login(User user){
+        String result="";
+        Gson gson=new Gson();
+        String jsonStr=gson.toJson(user);
+        try{
+            url=new URL(loginUrl);
+            HttpURLConnection conn=(HttpURLConnection)url.openConnection();
+            conn.setDoInput(true);
+            conn.setDoOutput(true);
+            conn.setRequestMethod("POST");
+            conn.setUseCaches(false);
+            conn.setRequestProperty("Content-Type","application/x-www-form-urlencoded");
+            conn.setRequestProperty("Charset","UTF-8");
+
+            conn.connect();
+
+            DataOutputStream dop=new DataOutputStream(conn.getOutputStream());
+            dop.writeBytes("param="+ URLEncoder.encode(jsonStr,"UTF-8"));
+            dop.flush();
+            dop.close();
+
+            BufferedReader reader=new BufferedReader(new InputStreamReader(conn.getInputStream()));
+            String readLine=null;
+            while((readLine=reader.readLine())!=null){
+                result+=readLine;
+            }
+            reader.close();
+            conn.disconnect();
+//            Log.d("wm","login success");
+
+        }catch(Exception e){
+//            Log.d("wm","login failed");
+        }
+        return Boolean.valueOf(result);
     }
 
 

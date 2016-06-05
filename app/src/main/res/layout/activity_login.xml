@@ -11,6 +11,7 @@
     android:background="@mipmap/icon_loginphoto"
     tools:context="com.befiring.xbefiring.activity.LoginActivity">
     <LinearLayout
+        android:id="@+id/layout_login"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -21,17 +22,32 @@
             android:src="@mipmap/icon_denglu_logo"
             android:layout_gravity="center_horizontal"/>
         <com.befiring.xbefiring.CustomView.CustomEditText
+            android:id="@+id/et_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             myedit:leftIcon="@mipmap/icon_loginuser"
             android:padding="15dp"
             android:hint="请输入用户名"/>
         <com.befiring.xbefiring.CustomView.CustomEditText
+            android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             myedit:leftIcon="@mipmap/icon_loginpassword"
             android:padding="15dp"
             android:hint="请输入密码"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/layout_login">
+        <Button
+            android:id="@+id/btn_login"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:background="@android:color/holo_blue_light"
+            android:text="登录"
+            android:textSize="20sp"/>
     </LinearLayout>
 
 

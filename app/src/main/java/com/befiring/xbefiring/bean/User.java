@@ -11,16 +11,19 @@ import java.io.Serializable;
 public class User implements Parcelable,Serializable{
 
     public String name;
-    public int age;
-    public int sex;
+    public String password;
 
     public User() {
+    }
+    public User(String name,String password){
+        this.name=name;
+        this.password=password;
+
     }
 
     public User(Parcel in) {
         this.name = in.readString();
-        this.age = in.readInt();
-        this.sex = in.readInt();
+        this.password= in.readString();
     }
 
     public String getName() {
@@ -31,23 +34,13 @@ public class User implements Parcelable,Serializable{
         this.name = name;
     }
 
-    public int getAge() {
-        return age;
+    public String getPassword() {
+        return password;
     }
 
-    public void setAge(int age) {
-        this.age = age;
+    public void setPassword(String password) {
+        this.password = password;
     }
-
-    public int getSex() {
-        return sex;
-    }
-
-    public void setSex(int sex) {
-        this.sex = sex;
-    }
-
-
 
     @Override
     public int describeContents() {
@@ -58,8 +51,7 @@ public class User implements Parcelable,Serializable{
     public void writeToParcel(Parcel dest, int flags) {
 
         dest.writeString(name);
-        dest.writeInt(age);
-        dest.writeInt(sex);
+        dest.writeString(password);
     }
 
     public static final Parcelable.Creator<User> CREATOR=new Creator<User>() {
