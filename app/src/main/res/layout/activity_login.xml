@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@mipmap/icon_loginphoto"
-    tools:context="com.befiring.xbefiring.MainActivity">
+    tools:context="com.befiring.xbefiring.activity.LoginActivity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,12 +25,13 @@
             android:layout_height="wrap_content"
             myedit:leftIcon="@mipmap/icon_loginuser"
             android:padding="15dp"
-            c
-            android:hint="hello world!"/>
+            android:hint="请输入用户名"/>
         <com.befiring.xbefiring.CustomView.CustomEditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="hello world!"/>
+            myedit:leftIcon="@mipmap/icon_loginpassword"
+            android:padding="15dp"
+            android:hint="请输入密码"/>
     </LinearLayout>
 
 

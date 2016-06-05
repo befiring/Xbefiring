@@ -18,14 +18,14 @@ import java.net.URLEncoder;
  */
 public class HttpUtil {
 
-    static String strUrl="http://192.168.1.213:8080/Xbefiring/servlet/UserServlet";
+    static String strUrl="http://192.168.1.102:8080/Xbefiring/servlet/UserServlet";
     static URL url=null;
 
     public static void upLoad(){
 
         User user=new User();
-        user.setName("befiring");
-        user.setAge(2);
+        user.setName("befiring1");
+        user.setAge(23);
         user.setSex(1);
         Gson gson=new Gson();
         String jsonStr=gson.toJson(user);

@@ -1,4 +1,4 @@
-package com.befiring.xbefiring.customView;
+package com.befiring.xbefiring.CustomView;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -48,7 +48,7 @@ public class CustomEditText2 extends EditText {
     }
 
     public void init() {
-        mDrawable = mContext.getResources().getDrawable(R.mipmap.ic_clear);
+        mDrawable = mContext.getResources().getDrawable(R.mipmap.clear_normal_list);
         mCallback = null;
         //重写了TextWatcher，在具体实现时就不用每个方法都实现，减少代码量
         TextWatcher textWatcher = new TextWatcher() {

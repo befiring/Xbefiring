@@ -10,6 +10,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.befiring.xbefiring.R;
+import com.befiring.xbefiring.activity.LoginActivity;
 import com.befiring.xbefiring.activity.SecondActivity;
 import com.befiring.xbefiring.bean.User;
 
@@ -49,7 +50,7 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
                 user.setAge(2);
                 user.setSex(1);
                 args.putParcelable("user",user);
-                Intent intent=new Intent(context,SecondActivity.class);
+                Intent intent=new Intent(context,LoginActivity.class);
                 intent.putExtras(args);
                 context.startActivity(intent);
             }

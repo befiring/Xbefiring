@@ -1,4 +1,4 @@
-package com.befiring.xbefiring.customView;
+package com.befiring.xbefiring.CustomView;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -38,10 +38,11 @@ public class CustomEditText extends EditText{
     }
 
     public void init(){
-        mDrawableRight=mContext.getResources().getDrawable(R.mipmap.ic_launcher);
+        mDrawableRight=mContext.getResources().getDrawable(R.mipmap.clear_normal_list);
         mCallback=null;
 //        Drawable d2=array.getDrawable(R.styleable.CustomEditText_rightIcon);
-//        this.setCompoundDrawablesWithIntrinsicBounds(d1,null,null,null);
+        this.setCompoundDrawablesWithIntrinsicBounds(mDrawableLeft,null,null,null);
+        setCompoundDrawablePadding(5);
         TextWatcher textWatcher=new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -75,11 +76,8 @@ public class CustomEditText extends EditText{
     public void updateCleanable(int length,boolean hasFocus){
         if(length>0&&hasFocus){
             setCompoundDrawablesWithIntrinsicBounds(mDrawableLeft,null,mDrawableRight,null);
-            setCompoundDrawablePadding(5);
         }else {
             setCompoundDrawablesWithIntrinsicBounds(mDrawableLeft,null,null,null);
-            setCompoundDrawablePadding(15);
-//            setPadding(15,15,15,15);
         }
     }
 

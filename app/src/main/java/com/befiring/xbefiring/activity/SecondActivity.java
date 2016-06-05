@@ -27,17 +27,6 @@ public class SecondActivity extends AppCompatActivity {
         CollapsingToolbarLayout collapsingToolbar = (CollapsingToolbarLayout) findViewById(R.id.collapsing_toolbar);
         collapsingToolbar.setTitle("Second Activity");
 
-        Bundle bundle=getIntent().getExtras();
-        User user=bundle.getParcelable("user");
-        Log.d("wm","user.name= "+user.getName()+"\n"+"user.getAge= "+user.getAge()+"\n"+"user.getSex= "+user.getSex());
-
-        new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                HttpUtil.upLoad();
-            }
-        }.start();
     }
 
 
