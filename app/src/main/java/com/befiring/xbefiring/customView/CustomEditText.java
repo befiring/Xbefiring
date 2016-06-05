@@ -1,6 +1,8 @@
 package com.befiring.xbefiring.customView;
 
 import android.content.Context;
+import android.content.res.TypedArray;
+import android.graphics.Canvas;
 import android.graphics.drawable.Drawable;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -12,55 +14,35 @@ import android.widget.EditText;
 import com.befiring.xbefiring.R;
 
 /**
- * Created by Administrator on 2016/6/2.
+ * Created by ASUS on 2016/6/2.
  */
-public class CustomEditText extends EditText {
+public class CustomEditText extends EditText{
 
-    //回调函数
-    private TextWatcherCallBack mCallback;
-    //右侧删除图标
-    private Drawable mDrawable;
     private Context mContext;
-
-    public interface TextWatcherCallBack{
-         void handleMoreTextChanged();
-    }
-    public void setCallBack(TextWatcherCallBack mCallback) {
-        this.mCallback = mCallback;
-    }
+    private Drawable mDrawableRight;
+    private Drawable mDrawableLeft;
+    private TextWatcherCallback mCallback;
 
     public CustomEditText(Context context) {
         super(context);
-        this.mContext = context;
+        this.mContext=context;
         init();
     }
 
     public CustomEditText(Context context, AttributeSet attrs) {
         super(context, attrs);
-        this.mContext = context;
+        this.mContext=context;
+        TypedArray array=mContext.obtainStyledAttributes(attrs, R.styleable.CustomEditText);
+        mDrawableLeft=array.getDrawable(R.styleable.CustomEditText_leftIcon);
         init();
     }
 
-    public CustomEditText(Context context, AttributeSet attrs, int defStyle) {
-        super(context, attrs, defStyle);
-        this.mContext = context;
-        init();
-    }
-
-    public void init() {
-        mDrawable = mContext.getResources().getDrawable(R.mipmap.ic_clear);
-        mCallback = null;
-        //重写了TextWatcher，在具体实现时就不用每个方法都实现，减少代码量
-        TextWatcher textWatcher = new TextWatcher() {
-            @Override
-            public void afterTextChanged(Editable s) {
-                //更新状态，检查是否显示删除按钮
-                updateCleanable(length(), true);
-                //如果有在activity中设置回调，则此处可以触发
-                if(mCallback != null)
-                    mCallback.handleMoreTextChanged();
-            }
-
+    public void init(){
+        mDrawableRight=mContext.getResources().getDrawable(R.mipmap.ic_launcher);
+        mCallback=null;
+//        Drawable d2=array.getDrawable(R.styleable.CustomEditText_rightIcon);
+//        this.setCompoundDrawablesWithIntrinsicBounds(d1,null,null,null);
+        TextWatcher textWatcher=new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -70,38 +52,49 @@ public class CustomEditText extends EditText {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
             }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                updateCleanable(length(),true);
+//                if(mCallback!=null){
+//                    mCallback.handleMoreTextChanged();
+//                }
+
+            }
         };
         this.addTextChangedListener(textWatcher);
         this.setOnFocusChangeListener(new OnFocusChangeListener() {
-
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
-                //更新状态，检查是否显示删除按钮
-                updateCleanable(length(), hasFocus);
+                updateCleanable(length(),hasFocus);
             }
         });
+
     }
 
-    //当内容不为空，而且获得焦点，才显示右侧删除按钮
-    public void updateCleanable(int length, boolean hasFocus){
-        if(length() > 0 && hasFocus)
-            setCompoundDrawablesWithIntrinsicBounds(null, null, mDrawable, null);
-        else
-            setCompoundDrawablesWithIntrinsicBounds(null, null, null, null);
+    public void updateCleanable(int length,boolean hasFocus){
+        if(length>0&&hasFocus){
+            setCompoundDrawablesWithIntrinsicBounds(mDrawableLeft,null,mDrawableRight,null);
+            setCompoundDrawablePadding(5);
+        }else {
+            setCompoundDrawablesWithIntrinsicBounds(mDrawableLeft,null,null,null);
+            setCompoundDrawablePadding(15);
+//            setPadding(15,15,15,15);
+        }
     }
 
+    @Override
+    protected void onDraw(Canvas canvas) {
+        super.onDraw(canvas);
+    }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        final int DRAWABLE_RIGHT = 2;
-        //可以获得上下左右四个drawable，右侧排第二。图标没有设置则为空。
-        Drawable rightIcon = getCompoundDrawables()[DRAWABLE_RIGHT];
-        if (rightIcon != null && event.getAction() == MotionEvent.ACTION_UP) {
-            //检查点击的位置是否是右侧的删除图标
-            //注意，使用getRwwX()是获取相对屏幕的位置，getX()可能获取相对父组件的位置
-            int leftEdgeOfRightDrawable = getRight() - getPaddingRight()
-                    - rightIcon.getBounds().width();
-            if (event.getRawX() >= leftEdgeOfRightDrawable) {
+        final int DRAWABLE_RIGHT=2;
+        Drawable rightIcon=getCompoundDrawables()[DRAWABLE_RIGHT];
+        if(rightIcon!=null&&event.getAction()==MotionEvent.ACTION_UP){
+            int leftEdgeOfDrawable=getRight()-getPaddingRight()-rightIcon.getBounds().width();
+            if(event.getRawX()>=leftEdgeOfDrawable){
                 setText("");
             }
         }
@@ -110,7 +103,12 @@ public class CustomEditText extends EditText {
 
     @Override
     protected void finalize() throws Throwable {
-        mDrawable = null;
+        mDrawableLeft=null;
+        mDrawableRight=null;
         super.finalize();
+    }
+
+    public interface TextWatcherCallback{
+         void handleMoreTextChanged();
     }
 }
