@@ -18,8 +18,8 @@ import java.net.URLEncoder;
  */
 public class HttpUtil {
 
-    static String registerUrl="http://192.168.1.102:8080/Xbefiring/servlet/UserServlet";
-    static String loginUrl="http://192.168.1.102:8080/Xbefiring/servlet/LoginServlet";
+    static String registerUrl="http://192.168.1.213:8080/Xbefiring/servlet/UserServlet";
+    static String loginUrl="http://192.168.1.213:8080/Xbefiring/servlet/LoginServlet";
     static URL url=null;
 
     public static String upLoad(User user){
@@ -87,11 +87,12 @@ public class HttpUtil {
             }
             reader.close();
             conn.disconnect();
-//            Log.d("wm","login success");
+
 
         }catch(Exception e){
 //            Log.d("wm","login failed");
         }
+        Log.d("wm","login result:"+result);
         return Boolean.valueOf(result);
     }
 

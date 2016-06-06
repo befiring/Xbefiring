@@ -26,8 +26,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         initView();
         Bundle bundle=getIntent().getExtras();
-        User user=bundle.getParcelable("user");
-        Log.d("wm","user.name= "+user.getName()+"\n"+"user.getAge= "+user.getPassword());
+//        User user=bundle.getParcelable("user");
+//        Log.d("wm","user.name= "+user.getName()+"\n"+"user.getAge= "+user.getPassword());
 
         new Thread(){
             @Override
@@ -49,9 +49,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     public void onClick(View v) {
         switch (v.getId()){
             case R.id.btn_login:
+                new Thread(){
+                    @Override
+                    public void run() {
+                        super.run();
+                        User user=new User(etName.getText().toString(),etPassword.getText().toString());
+                        boolean b=HttpUtil.login(user);
+                        Log.d("wm","user:"+user+" login:"+b);
+                    }
+                }.start();
 
-                boolean b=HttpUtil.login(new User(etName.getText().toString(),etPassword.getText().toString()));
-                Log.d("wm","login:"+b);
                 break;
         }
     }
