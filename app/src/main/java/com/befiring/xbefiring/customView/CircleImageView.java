@@ -1,4 +1,4 @@
-package com.befiring.xbefiring.customView;
+package com.befiring.xbefiring.CustomView;
 
 import android.content.Context;
 import android.util.AttributeSet;
