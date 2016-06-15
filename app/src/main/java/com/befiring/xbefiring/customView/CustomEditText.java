@@ -1,4 +1,4 @@
-package com.befiring.xbefiring.CustomView;
+package com.befiring.xbefiring.customView;
 
 import android.content.Context;
 import android.content.res.TypedArray;

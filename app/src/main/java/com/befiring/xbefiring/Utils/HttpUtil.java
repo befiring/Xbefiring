@@ -90,9 +90,8 @@ public class HttpUtil {
 
 
         }catch(Exception e){
-//            Log.d("wm","login failed");
         }
-        Log.d("wm","login result:"+result);
+
         return Boolean.valueOf(result);
     }
 

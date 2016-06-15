@@ -1,7 +1,10 @@
 package com.befiring.xbefiring.activity;
 
+import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -10,56 +13,96 @@ import android.widget.EditText;
 
 import com.befiring.xbefiring.R;
 import com.befiring.xbefiring.Utils.HttpUtil;
+import com.befiring.xbefiring.Utils.T;
 import com.befiring.xbefiring.bean.User;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener{
+import java.lang.ref.WeakReference;
 
+public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+
+    public static final String TAG="LoginActivity";
     private EditText etName;
     private EditText etPassword;
     private Button btnLogin;
 
-    private Handler mHandler;
+    private LoginHandler mHandler;
+    private static T t;
+
+    public static class LoginHandler extends Handler{
+        private WeakReference<LoginActivity>  mActivity;
+
+        public LoginHandler(LoginActivity activity){
+            this.mActivity=new WeakReference<LoginActivity>(activity);
+        }
+
+        @Override
+        public void handleMessage(Message msg) {
+            LoginActivity activity=mActivity.get();
+
+            switch (msg.what){
+                case R.id.login_success:
+                    activity.startWuziqiPanel();
+                    break;
+                case R.id.login_failed:
+                    t.show("用户名或密码不正确");
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
         initView();
-        Bundle bundle=getIntent().getExtras();
-//        User user=bundle.getParcelable("user");
-//        Log.d("wm","user.name= "+user.getName()+"\n"+"user.getAge= "+user.getPassword());
 
-        new Thread(){
-            @Override
-            public void run() {
-                super.run();
-                HttpUtil.upLoad(new User("wm","123"));
-            }
-        }.start();
     }
 
-    public void initView(){
-        etName=(EditText)findViewById(R.id.et_name);
-        etPassword=(EditText)findViewById(R.id.et_password);
-        btnLogin=(Button)findViewById(R.id.btn_login);
+    public void initView() {
+        etName = (EditText) findViewById(R.id.et_name);
+        etPassword = (EditText) findViewById(R.id.et_password);
+        btnLogin = (Button) findViewById(R.id.btn_login);
         btnLogin.setOnClickListener(this);
+
+        t=T.getT(this);
+        mHandler=new LoginHandler(this);
     }
 
     @Override
     public void onClick(View v) {
-        switch (v.getId()){
+        switch (v.getId()) {
             case R.id.btn_login:
-                new Thread(){
-                    @Override
-                    public void run() {
-                        super.run();
-                        User user=new User(etName.getText().toString(),etPassword.getText().toString());
-                        boolean b=HttpUtil.login(user);
-                        Log.d("wm","user:"+user+" login:"+b);
-                    }
-                }.start();
-
+                User user = new User(etName.getText().toString(), etPassword.getText().toString());
+                login(user);
                 break;
         }
     }
+
+    public void login(User user) {
+        new AsyncTask<User, Void, Boolean>() {
+            @Override
+            protected Boolean doInBackground(User... params) {
+                return HttpUtil.login(params[0]);
+            }
+            @Override
+            protected void onPostExecute(Boolean result) {
+                Log.d(TAG,"login result:"+result);
+                if(result){
+                    mHandler.sendEmptyMessage(R.id.login_success);
+                }else{
+                    mHandler.sendEmptyMessage(R.id.login_failed);
+                }
+
+            }
+        }.execute(user);
+    }
+
+    public void startWuziqiPanel(){
+        Intent intent=new Intent(LoginActivity.this,WuziqiActivity.class);
+        startActivity(intent);
+    }
+
 }

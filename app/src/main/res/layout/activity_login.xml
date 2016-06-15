@@ -21,14 +21,14 @@
             android:layout_height="wrap_content"
             android:src="@mipmap/icon_denglu_logo"
             android:layout_gravity="center_horizontal"/>
-        <com.befiring.xbefiring.CustomView.CustomEditText
+        <com.befiring.xbefiring.customView.CustomEditText
             android:id="@+id/et_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             myedit:leftIcon="@mipmap/icon_loginuser"
             android:padding="15dp"
             android:hint="请输入用户名"/>
-        <com.befiring.xbefiring.CustomView.CustomEditText
+        <com.befiring.xbefiring.customView.CustomEditText
             android:id="@+id/et_password"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
