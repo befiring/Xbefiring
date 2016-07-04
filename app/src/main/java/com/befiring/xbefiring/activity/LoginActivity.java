@@ -18,7 +18,7 @@ import com.befiring.xbefiring.bean.User;
 
 import java.lang.ref.WeakReference;
 
-public class LoginActivity extends AppCompatActivity implements View.OnClickListener {
+public class LoginActivity extends BaseActivity implements View.OnClickListener {
 
     public static final String TAG="LoginActivity";
     private EditText etName;
@@ -27,8 +27,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private LoginHandler mHandler;
     private static T t;
+    int i=1;
 
-    public static class LoginHandler extends Handler{
+    public class LoginHandler extends Handler{
         private WeakReference<LoginActivity>  mActivity;
 
         public LoginHandler(LoginActivity activity){
@@ -44,7 +45,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     activity.startWuziqiPanel();
                     break;
                 case R.id.login_failed:
-                    t.show("用户名或密码不正确");
+//                    t.show("用户名或密码不正确");
+                    showToast("用户名或密码不正确");
                     break;
                 default:
                     break;
@@ -67,7 +69,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnLogin = (Button) findViewById(R.id.btn_login);
         btnLogin.setOnClickListener(this);
 
-        t=T.getT(this);
         mHandler=new LoginHandler(this);
     }
 
@@ -76,7 +77,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         switch (v.getId()) {
             case R.id.btn_login:
                 User user = new User(etName.getText().toString(), etPassword.getText().toString());
-                login(user);
+//                login(user);
+                showToast(i+++"");
                 break;
         }
     }

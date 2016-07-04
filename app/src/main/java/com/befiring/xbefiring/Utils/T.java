@@ -8,20 +8,18 @@ import android.widget.Toast;
  */
 public class T {
 
-    private static T t=null;
+    private static Toast toast = null;
     private static Context mContext;
 
 
-    public static T getT(Context context){
-        if(t==null){
-            mContext=context;
-            t=new T();
+    public static void showToast(Context context, CharSequence content, int duration) {
+        mContext = context;
+        if (toast == null) {
+            toast = Toast.makeText(context, content, duration);
+        } else {
+            toast.setText(content);
         }
-        return t;
-    }
-
-    public  void show(String content){
-        Toast.makeText(mContext,content,Toast.LENGTH_SHORT).show();
+        toast.show();
     }
 
 }
