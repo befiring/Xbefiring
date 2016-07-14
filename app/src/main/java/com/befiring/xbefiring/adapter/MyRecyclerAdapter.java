@@ -43,16 +43,16 @@ public class MyRecyclerAdapter extends RecyclerView.Adapter<MyRecyclerAdapter.Vi
         holder.mTextView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Context context=v.getContext();
-                Bundle args=new Bundle();
-                User user=new User();
-                user.setName("befiring");
-                user.setPassword("123");
-
-                args.putParcelable("user",user);
-                Intent intent=new Intent(context,LoginActivity.class);
-                intent.putExtras(args);
-                context.startActivity(intent);
+//                Context context=v.getContext();
+//                Bundle args=new Bundle();
+//                User user=new User();
+//                user.setUsername("befiring");
+//                user.setPassword("123");
+//
+//                args.putParcelable("user",user);
+//                Intent intent=new Intent(context,LoginActivity.class);
+////                intent.putExtras(args);
+//                context.startActivity(intent);
             }
         });
     }
